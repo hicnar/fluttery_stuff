@@ -26,7 +26,7 @@ class ScrollingTab extends StatefulWidget {
 
 class _ScrollingTabState extends State<ScrollingTab>{
 
-  double fontSize = 30.0;
+  double fontSize = 290.0;
 
   @override
   Widget build(context) => _buildIos(context);
