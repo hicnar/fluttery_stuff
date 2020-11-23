@@ -1,22 +1,17 @@
-import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:fluttery_stuff/view_frame.dart';
 
 
-void main() => runApp(ScrollAccelerationInBurstsApp());
+void main() => runApp(FontResizingIosPerformanceIssue());
 
 
-class ScrollAccelerationInBurstsApp extends StatelessWidget {
+class FontResizingIosPerformanceIssue extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Scrolling Acceleration In Bursts',
-      theme: new ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+    return CupertinoApp(
+      title: 'Font Resizing iOS Performance Issue',
       home: ScrollingTab(),
     );
   }
@@ -31,22 +26,15 @@ class ScrollingTab extends StatefulWidget {
 
 class _ScrollingTabState extends State<ScrollingTab>{
 
-  final ScrollController _scrollController = ScrollController();
-  bool scrolling = false;
-  int speedFactor = 5;
+  double fontSize = 30.0;
 
   @override
-  Widget build(context) => _buildAndroid(context);
+  Widget build(context) => _buildIos(context);
 
-  @override
-  void dispose() {
-    super.dispose();
-    _scrollController.dispose();
-  }
-
-  Widget _buildAndroid(BuildContext context) {
+  Widget _buildIos(BuildContext context) {
 
     final Size size = MediaQuery.of(context).size;
+
     List<String> paragraphs = [
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam accumsan volutpat ligula ac interdum. Ut pellentesque sit amet odio nec venenatis. Integer malesuada elit non lorem ullamcorper, sit amet viverra nulla lobortis. Fusce eu elit at libero maximus laoreet ac ut odio. Sed ut diam non libero bibendum rutrum vel at lacus. Nullam ultrices tempus nulla, sit amet vehicula arcu iaculis quis. In efficitur erat ac velit tempus pretium.",
       "Aliquam ut libero mi. In ligula magna, vulputate eu luctus ut, tristique nec sapien. Mauris consequat cursus nisl. Etiam orci nibh, porta a gravida eget, pellentesque et tortor. Cras volutpat nisi condimentum tellus dapibus fermentum. Pellentesque placerat arcu quis massa viverra, eu sagittis ipsum fringilla. Aliquam erat volutpat. Fusce ante sem, rutrum ac tempor nec, lacinia at nulla.",
@@ -70,7 +58,7 @@ class _ScrollingTabState extends State<ScrollingTab>{
       "Suspendisse sollicitudin ultrices dolor luctus tristique. Integer eget accumsan leo. Curabitur ac pretium eros. Etiam enim arcu, faucibus et aliquet in, congue sed magna. Nunc mi mi, vulputate ut consequat ut, commodo non nibh. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In ut leo vel ipsum commodo sollicitudin. Fusce quis lacus eget ante tincidunt gravida. Suspendisse feugiat efficitur venenatis."
     ];
 
-    return  Scaffold(
+    return Scaffold(
         body: SafeArea(
             child: Container(
                 child: ViewFrame(
@@ -84,45 +72,13 @@ class _ScrollingTabState extends State<ScrollingTab>{
                     height: 120,
                     child: Column(
                       children:[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(right: 5),
-                              child: RaisedButton(
-                                color: Colors.blue,
-                                onPressed: () => speedReset(),
-                                child: Text('Reset Speed'),
-                              )
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 5),
-                              child: RaisedButton(
-                                color: Colors.blue,
-                                onPressed: () => scroll(),
-                                child: Text('Scroll/Stop'),
-                              )
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(left: 5),
-                              child: RaisedButton(
-                                color: Colors.blue,
-                                onPressed: () => speedUp(),
-                                child: Text('Accelerate'),
-                              )
-                            )
-                          ]
-                        ),
                         Container(
                           padding: EdgeInsets.symmetric(vertical: 5),
                           child: Slider.adaptive(
-                           divisions: 4,
-                           value: toSlider(speedFactor),
+                           value: toSlider(fontSize),
                            onChanged: (val) {
                               setState(() {
-                                speedFactor = (-4 * val + 5).round();
-                                scrolling = false;
-                                scroll();
+                                fontSize = 290 * val + 10;
                               });
                           }),
                         )
@@ -135,103 +91,26 @@ class _ScrollingTabState extends State<ScrollingTab>{
     );
   }
 
-  double toSlider(int speed) {
-    final sliderVal = -0.25 * speed + 1.25;
+  double toSlider(double size) {
+    final sliderVal = 0.003448275862069 * size -0.03448275862069;
     return sliderVal > 1 ? 1 : (sliderVal < 0 ? 0 : sliderVal);
   }
 
   Widget _buildScrollList(Size size, List<String> paragraphs) {
+
     var children = <Widget>[
-      Column(children: [
-        Container(
-            width: size.width,
-            height: size.height/2
-        ),
-        ...paragraphs
+      Column(children:
+        paragraphs
             .map((paragraph) => Container(
             width: size.width,
             padding: EdgeInsets.all(5),
-            child: Text(paragraph, style: TextStyle(fontSize: 30, color: Colors.black))))
+            child: Text(paragraph, style: TextStyle(fontSize: fontSize, color: Colors.black))))
             .toList(),
-      ])
+        )
     ];
 
     return Container(
-        child: NotificationListener<ScrollNotification>(
-            onNotification: (notification) {
-              if (notification is ScrollEndNotification) {
-                _handleLooping();
-              }
-              return true;
-            },
-            child: ListView(controller: _scrollController, children: children)
-        )
+      child: ListView(children: children)
     );
-  }
-
-
-  void speedReset() {
-    setState(() {
-      speedFactor = 5;
-      if (scrolling) {
-        scrolling = false;
-        scroll();
-      }
-    });
-  }
-
-  void speedUp() {
-
-    if (scrolling) {
-      setState(() {
-        /// allow speed changes only if scrolling
-        if ((speedFactor - 1) > 0) {
-          speedFactor--;
-        } else {
-          speedFactor = 1;
-        }
-        scrolling = false;
-        scroll();
-      });
-    }
-  }
-
-  void scroll() {
-
-    if(!scrolling) {
-      double maxScrollExtent = _scrollController.position.maxScrollExtent;
-
-      int millisecondsLeft = (speedFactor *
-          maxScrollExtent / maxScrollExtent *
-          maxScrollExtent *
-          (maxScrollExtent - _scrollController.offset) ~/
-          maxScrollExtent)
-          .toInt();
-
-      _scrollController.animateTo(
-        _scrollController.position.maxScrollExtent,
-        curve: Curves.linear,
-        duration: Duration(milliseconds: millisecondsLeft),
-      );
-    } else {
-      /// stop scrolling
-      _scrollController.jumpTo(_scrollController.offset);
-    }
-    scrolling = !scrolling;
-  }
-
-  void _handleLooping() {
-    if (_scrollController.offset >= _scrollController.position.maxScrollExtent) {
-      // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
-      if( _scrollController.position.activity is DrivenScrollActivity) {
-        Timer(Duration(seconds: 1), () {
-          _scrollController.animateTo(0, duration: Duration(seconds: 1),
-              curve: Curves.decelerate).then((_) {
-            scrolling = false;
-            scroll();
-          });
-        });
-      }
-    }
   }
 }
