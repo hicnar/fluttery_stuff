@@ -101,7 +101,7 @@ class _ListInsideDialogState extends State<ListInsideDialog> with PlatformUtils{
                                   )
                               ),
                               Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 5),
+                                  padding: EdgeInsets.only(right: 5),
                                   child: Button(
                                     onPressed: () {
                                       setState(() {
@@ -112,7 +112,7 @@ class _ListInsideDialogState extends State<ListInsideDialog> with PlatformUtils{
                                   )
                               ),
                               Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 5),
+                                  padding: EdgeInsets.only(right: 5),
                                   child: Button(
                                     onPressed: () {
                                       setState(() {
@@ -123,7 +123,7 @@ class _ListInsideDialogState extends State<ListInsideDialog> with PlatformUtils{
                                   )
                               ),
                               Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 5),
+                                  padding: EdgeInsets.only(right: 5),
                                   child: Button(
                                     onPressed: () {
                                       setState(() {
@@ -134,7 +134,7 @@ class _ListInsideDialogState extends State<ListInsideDialog> with PlatformUtils{
                                   )
                               ),
                               Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 5),
+                                  padding: EdgeInsets.only(right: 5),
                                   child: Button(
                                     onPressed: () {
                                       setState(() {
@@ -145,7 +145,7 @@ class _ListInsideDialogState extends State<ListInsideDialog> with PlatformUtils{
                                   )
                               ),
                               Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 5),
+                                  padding: EdgeInsets.only(right: 5),
                                   child: Button(
                                     onPressed: () {
                                       setState(() {
@@ -156,7 +156,7 @@ class _ListInsideDialogState extends State<ListInsideDialog> with PlatformUtils{
                                   )
                               ),
                               Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 5),
+                                  padding: EdgeInsets.only(right: 5),
                                   child: Button(
                                     onPressed: () {
                                       setState(() {
@@ -167,7 +167,7 @@ class _ListInsideDialogState extends State<ListInsideDialog> with PlatformUtils{
                                   )
                               ),
                               Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 5),
+                                  padding: EdgeInsets.only(right: 5),
                                   child: Button(
                                     onPressed: () {
                                       setState(() {
@@ -178,7 +178,7 @@ class _ListInsideDialogState extends State<ListInsideDialog> with PlatformUtils{
                                   )
                               ),
                               Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 5),
+                                  padding: EdgeInsets.only(right: 5),
                                   child: Button(
                                     onPressed: () {
                                       setState(() {
@@ -189,7 +189,7 @@ class _ListInsideDialogState extends State<ListInsideDialog> with PlatformUtils{
                                   )
                               ),
                               Padding(
-                                  padding: EdgeInsets.only(left: 5),
+                                  padding: EdgeInsets.only(right: 5),
                                   child: Button(
                                     onPressed: () {
                                       setState(() {
