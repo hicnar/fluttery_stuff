@@ -9,10 +9,10 @@ import 'keyboard_avoiding.dart';
 
 class ListViewNumbersDialog extends StatefulWidget {
 
-  final List<int> generatedNumbers;
+  final List<int> elements;
 
   ListViewNumbersDialog({
-    @required this.generatedNumbers,
+    @required this.elements,
     Key key}) : super(key: key);
 
   @override
@@ -25,16 +25,15 @@ class _ListViewNumbersDialogState extends HeightCalculatingState<ListViewNumbers
   @override
   Widget build(BuildContext context) {
 
-    final title = "Generated Numbers (ListView)";
+    final title = "ListView based dialog with ${widget.elements.length} ${widget.elements.length == 1 ? "element" : "elements" }";
     final size = MediaQuery.of(context).size;
-
 
     void _ok(BuildContext context) {
       Navigator.of(context).pop();
     }
 
     Widget _buildContent() => ListView.builder(
-      itemCount: widget.generatedNumbers.length,
+      itemCount: widget.elements.length,
       itemBuilder: (context, index) {
         return Card(
           key: addKey(),
@@ -44,7 +43,7 @@ class _ListViewNumbersDialogState extends HeightCalculatingState<ListViewNumbers
               setState(() {
               });
             },
-            child: _Tile(generatedNumber: widget.generatedNumbers[index],
+            child: _Tile(generatedNumber: widget.elements[index],
             )
           )
         );

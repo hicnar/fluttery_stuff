@@ -214,7 +214,7 @@ class _ListInsideDialogState extends State<ListInsideDialog> with PlatformUtils{
                                       barrierDismissible: false,
                                       builder: (BuildContext context) =>
                                           ListViewNumbersDialog(
-                                            generatedNumbers: numbers,
+                                            elements: numbers,
                                           )
                                     );
                                   },
@@ -231,7 +231,7 @@ class _ListInsideDialogState extends State<ListInsideDialog> with PlatformUtils{
                                         barrierDismissible: false,
                                         builder: (BuildContext context) =>
                                             ColumnNumbersDialog(
-                                              generatedNumbers: numbers,
+                                              elements: numbers,
                                             )
                                     );
                                   },

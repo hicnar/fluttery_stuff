@@ -7,10 +7,10 @@ import 'keyboard_avoiding.dart';
 
 class ColumnNumbersDialog extends StatefulWidget {
 
-  final List<int> generatedNumbers;
+  final List<int> elements;
 
   ColumnNumbersDialog({
-    @required this.generatedNumbers,
+    @required this.elements,
     Key key}) : super(key: key);
 
   @override
@@ -23,14 +23,14 @@ class _ColumnNumbersDialogState extends State<ColumnNumbersDialog>{
   @override
   Widget build(BuildContext context) {
 
-    final title = "Generated Numbers (Column)";
+    final title = "Column based dialog with ${widget.elements.length} ${widget.elements.length == 1 ? "element" : "elements" }";
 
     void _ok(BuildContext context) {
       Navigator.of(context).pop();
     }
 
     List<Widget> _buildContent() =>
-      widget.generatedNumbers.map((num) =>
+      widget.elements.map((num) =>
          Card(
            elevation: 1.0,
            child: GestureDetector(
