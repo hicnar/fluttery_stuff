@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'file:///Users/khycnar/IdeaProjects/fluttery_stuff/lib/view_frame.dart';
+import 'package:fluttery_stuff/view_frame.dart';
 
 
 void main() => runApp(ScrollingIssueApp());
